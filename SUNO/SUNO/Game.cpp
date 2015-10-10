@@ -9,32 +9,45 @@ Game::Game() {
 	tour_ = 1;
 	talon_ = Paquet();
 	pioche_ = Paquet();
+	passTour_ = false;
+	mains_[4] = {};
 }
 
 void Game::commencer() {
-	/*
-	TODO :
-	Init pioche (Crée toutes les cartes dans la pioche)
+	pioche_.push_back(new Carte(this, ROUGE, 0));
+	pioche_.push_back(new Carte(this, BLEU, 0));
+	pioche_.push_back(new Carte(this, JAUNE, 0));
+	pioche_.push_back(new Carte(this, VERT, 0));
 
-	*/
+	for (int s = 1; s < 12; ++s) {
+		for (int j = -1; j > -4; --j) {
+			pioche_.push_back(new Carte(this, j, s));
+			pioche_.push_back(new Carte(this, j, s));
+
+		}
+	}
+	for (int i = 1; i < 4; ++i) {
+		pioche_.push_back(new Carte(this, NOIR, JOKER));
+		pioche_.push_back(new Carte(this, NOIR, PLUS4));
+	}
 	melangerPioche();
 	talon_.push_back(pioche_.back());
 	pioche_.pop_back();
 
-	for (int i = 0; i < 4; ++i) {
+	for (int j = 0; j < 4; ++j) {
 		Paquet main = piocher(7);
-		mains_[i] = main;
+		mains_[j] = main;
 	}
 }
 
 void Game::melangerPioche() {
-	srand(time(0));
+	srand(time(nullptr));
 
 	std::random_shuffle(pioche_.begin(), pioche_.end());
 }
 
 
-Paquet Game::piocher(int nb = 1) {
+Paquet Game::piocher(unsigned int nb = 1) {
 	Paquet cartes = Paquet();
 
 	while (cartes.size() < nb) {
@@ -67,15 +80,25 @@ void Game::tourSuivant() {
 		new_tour = TOUR_MIN;
 
 	tour_ = new_tour;
+	if(passTour_) {
+		passTour_ = false;
+		tourSuivant();
+	}
 }
 
 void Game::changerSens() {
 	sens_ *= -1;
 }
 
-bool Game::estJouable(Carte carte) {
-	//TODO : 
-	return false;
+bool Game::estJouable(Carte* carte) {
+	bool memeSymbole = talon_.back()->symbole() == carte->symbole();
+	bool memeCouleur = talon_.back()->couleur() == carte->couleur();
+	return (PLUS2 > 0 ? memeSymbole : memeSymbole || memeCouleur);
+}
+
+void Game::jouerCarte(Carte* carte) {
+	carte->jouer();
+	talon_.push_back(carte);
 }
 
 

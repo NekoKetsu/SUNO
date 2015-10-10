@@ -13,7 +13,7 @@ Carte::Carte(Game* game) {
 	symbole_ = NONE;
 }
 
-Carte::Carte(Game* game, Couleur couleur, Symbole symbole) {
+Carte::Carte(Game* game, int couleur, unsigned int symbole) {
 	game_ = game;
 	couleur_ = couleur;
 	symbole_ = symbole;
@@ -21,4 +21,15 @@ Carte::Carte(Game* game, Couleur couleur, Symbole symbole) {
 
 
 Carte::~Carte() {
+}
+
+unsigned int Carte::symbole() {
+	return symbole_;
+}
+
+int Carte::couleur() {
+	return couleur_;
+}
+
+void Carte::jouer() {
 }
