@@ -1,7 +1,7 @@
 #include "Game.h"
-#include "Carte.h"
 #include <ctime>
 #include <algorithm>
+#include "Carte.h"
 
 
 Game::Game() {
@@ -11,10 +11,11 @@ Game::Game() {
 	pioche_ = Paquet();
 	passTour_ = false;
 	mains_[4] = {};
+	cptPlusDeux = 0;
 }
 
 void Game::commencer() {
-	pioche_.push_back(new Carte(this, ROUGE, 0));
+	/*pioche_.push_back(new Carte(this, ROUGE, 0));
 	pioche_.push_back(new Carte(this, BLEU, 0));
 	pioche_.push_back(new Carte(this, JAUNE, 0));
 	pioche_.push_back(new Carte(this, VERT, 0));
@@ -29,7 +30,7 @@ void Game::commencer() {
 	for (int i = 1; i < 4; ++i) {
 		pioche_.push_back(new Carte(this, NOIR, JOKER));
 		pioche_.push_back(new Carte(this, NOIR, PLUS4));
-	}
+	}*/
 	melangerPioche();
 	talon_.push_back(pioche_.back());
 	pioche_.pop_back();
@@ -90,10 +91,14 @@ void Game::changerSens() {
 	sens_ *= -1;
 }
 
+void Game::passeTour() {
+	passTour_ = true;
+}
+
 bool Game::estJouable(Carte* carte) {
 	bool memeSymbole = talon_.back()->symbole() == carte->symbole();
 	bool memeCouleur = talon_.back()->couleur() == carte->couleur();
-	return (PLUS2 > 0 ? memeSymbole : memeSymbole || memeCouleur);
+	return (PLUS2 > 0 ? memeSymbole :  memeCouleur || memeSymbole);
 }
 
 void Game::jouerCarte(Carte* carte) {

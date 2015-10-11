@@ -1,22 +1,26 @@
 #include "Carte.h"
-#include "Game.h"
+
 
 Carte::Carte() {
-	game_ = new Game();
+	game_ = nullptr;
 	couleur_ = NOIR;
 	symbole_ = NONE;
+	comp_ = nullptr;
 }
 
-Carte::Carte(Game* game) {
-	game_ = game;
-	couleur_ = NOIR;
-	symbole_ = NONE;
+Carte::Carte(int couleur, unsigned int symbole) {
+	game_ = nullptr;
+	couleur_ = couleur;
+	symbole_ = symbole;
+	comp_ = nullptr;
 }
 
-Carte::Carte(Game* game, int couleur, unsigned int symbole) {
+
+Carte::Carte(Game* game, ComportementCarte comp, int couleur, unsigned int symbole) {
 	game_ = game;
 	couleur_ = couleur;
 	symbole_ = symbole;
+	comp_ = comp;
 }
 
 
@@ -32,4 +36,10 @@ int Carte::couleur() {
 }
 
 void Carte::jouer() {
+	comp_.jouer();
 }
+
+void Carte::setComportement(ComportementCarte comp) {
+	comp_ = comp;
+}
+

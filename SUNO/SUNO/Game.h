@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 
+
 class Carte;
 typedef std::vector<Carte*> Paquet;
 
@@ -9,6 +10,7 @@ private:
 	bool passTour_;
 	int sens_;
 	int tour_;
+	int cptPlusDeux;
 	const int TOUR_MIN = 1;
 	const int TOUR_MAX = 4;
 	Paquet talon_;
@@ -19,10 +21,11 @@ public:
 	Game();
 	void commencer();
 	void melangerPioche();
-	Paquet piocher(unsigned nb);
+	Paquet piocher(unsigned int nb);
 	void refairePioche();
 	void tourSuivant();
 	void changerSens();
+	void passeTour();
 	bool estJouable(Carte* carte);
 	void jouerCarte(Carte* carte);
 	~Game();
@@ -34,4 +37,13 @@ public:
 	void set_pioche(Paquet pioche) {
 		pioche_ = pioche;
 	}
+
+	int getCptPlusDeux() const {
+		return cptPlusDeux;
+	}
+
+	void incrCptPlusDeux() {
+		++cptPlusDeux;
+	}
+
 };
