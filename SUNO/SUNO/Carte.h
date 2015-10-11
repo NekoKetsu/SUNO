@@ -28,7 +28,8 @@ private:
 public:
 	Carte();
 	Carte(int couleur, unsigned symbole);
-	Carte(Game * game, ComportementCarte comp, int couleur, unsigned int symbole);
+	Carte(Game* game, ComportementCarte comp, int couleur, unsigned int symbole);
+	Carte(Game * game, int couleur, unsigned int symbole);
 	~Carte();
 	unsigned int symbole();
 	int couleur();

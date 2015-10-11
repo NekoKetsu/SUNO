@@ -24,6 +24,9 @@ Carte::Carte(Game* game, ComportementCarte comp, int couleur, unsigned int symbo
 }
 
 
+Carte::Carte(Game * game, int couleur, unsigned int symbole) {
+}
+
 Carte::~Carte() {
 }
 
