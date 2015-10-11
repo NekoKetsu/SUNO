@@ -16,7 +16,9 @@ Carte * CarteFactory::createCarte(Game* game, int couleur, int symbole) {
 	case PLUS2 :
 		comp = ComportementPlusDeux(carte);
 		break;
-		
+	default :
+		comp = ComportementCarte(carte);
+		break;
 	}
 	carte->setComportement(comp);
 	return carte;

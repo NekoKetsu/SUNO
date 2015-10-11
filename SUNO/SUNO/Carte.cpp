@@ -8,7 +8,7 @@ Carte::Carte() {
 	comp_ = nullptr;
 }
 
-Carte::Carte(int couleur, unsigned int symbole) {
+Carte::Carte(int couleur, int symbole) {
 	game_ = nullptr;
 	couleur_ = couleur;
 	symbole_ = symbole;
@@ -16,7 +16,7 @@ Carte::Carte(int couleur, unsigned int symbole) {
 }
 
 
-Carte::Carte(Game* game, ComportementCarte comp, int couleur, unsigned int symbole) {
+Carte::Carte(Game* game, ComportementCarte comp, int couleur, int symbole) {
 	game_ = game;
 	couleur_ = couleur;
 	symbole_ = symbole;
@@ -24,13 +24,17 @@ Carte::Carte(Game* game, ComportementCarte comp, int couleur, unsigned int symbo
 }
 
 
-Carte::Carte(Game * game, int couleur, unsigned int symbole) {
+Carte::Carte(Game * game, int couleur, int symbole) {
+	game_ = game;
+	couleur_ = couleur;
+	symbole_ = symbole;
+	comp_ = nullptr;
 }
 
 Carte::~Carte() {
 }
 
-unsigned int Carte::symbole() {
+ int Carte::symbole() {
 	return symbole_;
 }
 
@@ -44,5 +48,9 @@ void Carte::jouer() {
 
 void Carte::setComportement(ComportementCarte comp) {
 	comp_ = comp;
+}
+
+std::string Carte::afficher() {
+	return std::to_string(symbole_) + " " + std::to_string(couleur_);
 }
 

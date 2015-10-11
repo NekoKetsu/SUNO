@@ -2,6 +2,7 @@
 #include <ctime>
 #include <algorithm>
 #include "Carte.h"
+#include "CarteFactory.h"
 
 
 Game::Game() {
@@ -10,27 +11,27 @@ Game::Game() {
 	talon_ = Paquet();
 	pioche_ = Paquet();
 	passTour_ = false;
-	mains_[4] = {};
 	cptPlusDeux_ = 0;
 }
 
 void Game::commencer() {
-	/*pioche_.push_back(new Carte(this, ROUGE, 0));
-	pioche_.push_back(new Carte(this, BLEU, 0));
-	pioche_.push_back(new Carte(this, JAUNE, 0));
-	pioche_.push_back(new Carte(this, VERT, 0));
 
-	for (int s = 1; s < 12; ++s) {
-		for (int j = -1; j > -4; --j) {
-			pioche_.push_back(new Carte(this, j, s));
-			pioche_.push_back(new Carte(this, j, s));
+	pioche_.push_back(CarteFactory::createCarte(this, JAUNE, 0));
+	pioche_.push_back(CarteFactory::createCarte(this, ROUGE, 0));
+	pioche_.push_back(CarteFactory::createCarte(this, BLEU, 0));
+	pioche_.push_back(CarteFactory::createCarte(this, VERT, 0));
+
+	for (int s = 1; s < 13; ++s) {
+		for (int j = -1; j > -5; --j) {
+			pioche_.push_back(CarteFactory::createCarte(this, j, s));
+			pioche_.push_back(CarteFactory::createCarte(this, j, s));
 
 		}
 	}
-	for (int i = 1; i < 4; ++i) {
-		pioche_.push_back(new Carte(this, NOIR, JOKER));
-		pioche_.push_back(new Carte(this, NOIR, PLUS4));
-	}*/
+	for (int i = 1; i < 5; ++i) {
+		pioche_.push_back(CarteFactory::createCarte(this, NOIR, JOKER));
+		pioche_.push_back(CarteFactory::createCarte(this, NOIR, PLUS4));
+	}
 	melangerPioche();
 	talon_.push_back(pioche_.back());
 	pioche_.pop_back();
