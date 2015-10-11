@@ -11,7 +11,7 @@ Game::Game() {
 	pioche_ = Paquet();
 	passTour_ = false;
 	mains_[4] = {};
-	cptPlusDeux = 0;
+	cptPlusDeux_ = 0;
 }
 
 void Game::commencer() {
@@ -98,7 +98,18 @@ void Game::passeTour() {
 bool Game::estJouable(Carte* carte) {
 	bool memeSymbole = talon_.back()->symbole() == carte->symbole();
 	bool memeCouleur = talon_.back()->couleur() == carte->couleur();
-	return (PLUS2 > 0 ? memeSymbole :  memeCouleur || memeSymbole);
+	return (cptPlusDeux_ > 0 ? memeSymbole :  memeCouleur || memeSymbole);
+}
+
+Paquet Game::getCarteJouables(int main) {
+	Paquet cartes = Paquet();
+	for (Carte* carte : mains_[main]) {
+		if(estJouable(carte)) {
+			cartes.push_back(carte);
+		}
+	}
+
+	return cartes;
 }
 
 void Game::jouerCarte(Carte* carte) {

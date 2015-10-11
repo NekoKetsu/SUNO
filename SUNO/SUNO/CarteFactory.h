@@ -4,7 +4,7 @@
 class Game;
 class Carte;
 
-static class CarteFactory {
+class CarteFactory {
 private:
 	static Game* game_;
 public:

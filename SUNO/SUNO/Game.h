@@ -10,7 +10,7 @@ private:
 	bool passTour_;
 	int sens_;
 	int tour_;
-	int cptPlusDeux;
+	int cptPlusDeux_;
 	const int TOUR_MIN = 1;
 	const int TOUR_MAX = 4;
 	Paquet talon_;
@@ -27,6 +27,7 @@ public:
 	void changerSens();
 	void passeTour();
 	bool estJouable(Carte* carte);
+	Paquet getCarteJouables(int main);
 	void jouerCarte(Carte* carte);
 	~Game();
 
@@ -39,11 +40,11 @@ public:
 	}
 
 	int getCptPlusDeux() const {
-		return cptPlusDeux;
+		return cptPlusDeux_;
 	}
 
 	void incrCptPlusDeux() {
-		++cptPlusDeux;
+		++cptPlusDeux_;
 	}
 
 };
