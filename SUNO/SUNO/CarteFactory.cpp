@@ -8,7 +8,7 @@ Carte * CarteFactory::createCarte(Game* game, int couleur, int symbole) {
 	ComportementCarte comp;
 	switch (symbole) {
 	case SENS:
-		comp = ComportementPasseTour(carte);
+		comp = ComportementChangeSens(carte);
 		break;
 	case PASS : 
 		comp = ComportementPasseTour(carte);
