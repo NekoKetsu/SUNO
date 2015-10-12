@@ -1,7 +1,9 @@
 #include "CarteFactory.h"
 #include "ComportementPlusDeux.h"
 #include "ComportementPasseTour.h"
+#include "ComportementChangeSens.h"
 #include "Carte.h"
+
 
 Carte * CarteFactory::createCarte(Game* game, int couleur, int symbole) {
 	Carte* carte = new Carte(game, couleur, symbole);

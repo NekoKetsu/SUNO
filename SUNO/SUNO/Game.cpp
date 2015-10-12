@@ -97,7 +97,8 @@ void Game::jouerTour() {
 	Carte carteAJouee;
 	carteAJouee.jouer();
 	// Voir comment géré le choix du joker et di plus 4 (ta vu tmtc)
-	mainCourante.erase(std::remove(mainCourante.begin(), mainCourante.end(), carteAJouee), mainCourante.end());
+	//	v Supposé supprimer la dite carteAjouer de la main du joueur v
+	//	mainCourante.erase(std::remove(mainCourante.begin(), mainCourante.end(), carteAJouee), mainCourante.end());
 	if(mainCourante.empty()) {
 		// SITUATION DE VICTOIRE du joueur n°tour_
 	}else {
