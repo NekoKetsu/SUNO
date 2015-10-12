@@ -11,6 +11,7 @@ private:
 	int sens_;
 	int tour_;
 	int cptPlusDeux_;
+	bool plusQuatre_;
 	const int TOUR_MIN = 1;
 	const int TOUR_MAX = 4;
 	Paquet talon_;
@@ -23,6 +24,7 @@ public:
 	void melangerPioche();
 	Paquet piocher(unsigned int nb);
 	void refairePioche();
+	void jouerTour();
 	void tourSuivant();
 	void changerSens();
 	void passeTour();

@@ -12,6 +12,7 @@ Game::Game() {
 	pioche_ = Paquet();
 	passTour_ = false;
 	cptPlusDeux_ = 0;
+	plusQuatre_ = false;
 }
 
 void Game::commencer() {
@@ -73,6 +74,36 @@ void Game::refairePioche() {
 	talon_.push_back(c);
 }
 
+void Game::jouerTour() {
+	int nbPioche = (cptPlusDeux_ > 0 ? cptPlusDeux_*2 : (plusQuatre_ ?  4 : 1));
+	Paquet cartesJouables = Paquet();
+	Paquet mainCourante = mains_[tour_];
+	
+	for (Carte* c : mainCourante) {
+		if(estJouable(c)) {
+			cartesJouables.push_back(c);
+		}
+	}
+
+	if (cartesJouables.empty()) {
+		Paquet pioches = piocher(nbPioche);
+		
+		mainCourante.insert(mainCourante.end(), pioches.begin(), pioches.end());
+	}
+	// TODO 
+	//	si nbPioche == 1 checker si la nouvelle carte est jouable
+	//		Demander quelles cartes joué parmi les jouables 
+	//		Mettre dans carteAJouer
+	Carte carteAJouee;
+	carteAJouee.jouer();
+	// Voir comment géré le choix du joker et di plus 4 (ta vu tmtc)
+	mainCourante.erase(std::remove(mainCourante.begin(), mainCourante.end(), carteAJouee), mainCourante.end());
+	if(mainCourante.empty()) {
+		// SITUATION DE VICTOIRE du joueur n°tour_
+	}else {
+		tourSuivant();
+	}
+}
 
 void Game::tourSuivant() {
 	int new_tour = sens_ + tour_;
@@ -99,7 +130,8 @@ void Game::passeTour() {
 bool Game::estJouable(Carte* carte) {
 	bool memeSymbole = talon_.back()->symbole() == carte->symbole();
 	bool memeCouleur = talon_.back()->couleur() == carte->couleur();
-	return (cptPlusDeux_ > 0 ? memeSymbole :  memeCouleur || memeSymbole);
+	bool carteJoker = carte->couleur() == NOIR;
+	return (cptPlusDeux_ > 0 ? memeSymbole :  memeCouleur || memeSymbole || carteJoker);
 }
 
 Paquet Game::getCarteJouables(int main) {
