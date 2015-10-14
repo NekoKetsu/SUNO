@@ -4,6 +4,8 @@
 
 class Carte;
 typedef std::vector<Carte*> Paquet;
+const int TOUR_MIN = 1;
+const int TOUR_MAX = 4;
 
 class Game {
 private:
@@ -12,8 +14,6 @@ private:
 	int tour_;
 	int cptPlusDeux_;
 	bool plusQuatre_;
-	const int TOUR_MIN = 1;
-	const int TOUR_MAX = 4;
 	Paquet talon_;
 	Paquet pioche_;
 	Paquet mains_[4];
