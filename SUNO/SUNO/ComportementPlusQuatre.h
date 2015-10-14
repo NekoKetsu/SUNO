@@ -1,9 +1,11 @@
 #pragma once
-#include "ComportementCarte.h"
+#include "ComportementJoker.h"
+
 class ComportementPlusQuatre :
-	public ComportementCarte {
+		public ComportementJoker {
 public:
+	ComportementPlusQuatre(Carte* carte);
 	ComportementPlusQuatre();
 	~ComportementPlusQuatre();
+	void jouer();
 };
-

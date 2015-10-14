@@ -9,5 +9,5 @@ ComportementPasseTour::~ComportementPasseTour() {
 }
 
 void ComportementPasseTour::jouer() {
-	carte_->game()->passeTour();
+	carte_->getGame()->passeTour();
 }

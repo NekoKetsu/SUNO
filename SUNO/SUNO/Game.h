@@ -29,8 +29,10 @@ public:
 	void changerSens();
 	void passeTour();
 	bool estJouable(Carte* carte);
+	int choixCouleurJoueur();
 	Paquet getCarteJouables(int main);
 	void jouerCarte(Carte* carte);
+	void setPlusQuatre(bool plusQuatre);
 	~Game();
 
 	Paquet pioche() {

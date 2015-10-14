@@ -6,4 +6,3 @@ class CarteFactory {
 public:
 	static Carte* createCarte(Game* game, int couleur, int symbole);
 };
-

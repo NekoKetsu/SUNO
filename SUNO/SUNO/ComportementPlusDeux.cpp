@@ -5,10 +5,11 @@
 ComportementPlusDeux::ComportementPlusDeux() {
 }
 
-ComportementPlusDeux::ComportementPlusDeux(Carte* carte) : ComportementCarte(carte) {}
+ComportementPlusDeux::ComportementPlusDeux(Carte* carte) : ComportementCarte(carte) {
+}
 
 void ComportementPlusDeux::jouer() {
-	carte_->game()->incrCptPlusDeux();
+	carte_->getGame()->incrCptPlusDeux();
 }
 
 ComportementPlusDeux::~ComportementPlusDeux() {

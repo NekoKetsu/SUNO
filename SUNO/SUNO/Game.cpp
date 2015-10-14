@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <ctime>
 #include <algorithm>
+#include <iostream>
 #include "Carte.h"
 #include "CarteFactory.h"
 
@@ -75,33 +76,37 @@ void Game::refairePioche() {
 }
 
 void Game::jouerTour() {
-	int nbPioche = (cptPlusDeux_ > 0 ? cptPlusDeux_*2 : (plusQuatre_ ?  4 : 1));
+	int nbPioche = (cptPlusDeux_ > 0 ? cptPlusDeux_ * 2 : (plusQuatre_ ? 4 : 1));
 	Paquet cartesJouables = Paquet();
 	Paquet mainCourante = mains_[tour_];
-	
+
+	// Récupère les cartes jouables
 	for (Carte* c : mainCourante) {
-		if(estJouable(c)) {
+		if (estJouable(c)) {
 			cartesJouables.push_back(c);
 		}
+
 	}
 
+
+	// Si aucune carte jouable
 	if (cartesJouables.empty()) {
+		// Pioches les cartes
 		Paquet pioches = piocher(nbPioche);
-		
+		// Met dans la main
 		mainCourante.insert(mainCourante.end(), pioches.begin(), pioches.end());
 	}
 	// TODO 
 	//	si nbPioche == 1 checker si la nouvelle carte est jouable
 	//		Demander quelles cartes joué parmi les jouables 
 	//		Mettre dans carteAJouer
-	Carte carteAJouee;
-	carteAJouee.jouer();
-	// Voir comment géré le choix du joker et di plus 4 (ta vu tmtc)
-	//	v Supposé supprimer la dite carteAjouer de la main du joueur v
-	//	mainCourante.erase(std::remove(mainCourante.begin(), mainCourante.end(), carteAJouee), mainCourante.end());
-	if(mainCourante.empty()) {
+	Carte* carteAJouer;
+	jouerCarte(carteAJouer);
+	mainCourante.erase(std::find(mainCourante.begin(), mainCourante.end(), carteAJouer));
+	if (mainCourante.empty()) {
 		// SITUATION DE VICTOIRE du joueur n°tour_
-	}else {
+	}
+	else {
 		tourSuivant();
 	}
 }
@@ -114,7 +119,7 @@ void Game::tourSuivant() {
 		new_tour = TOUR_MIN;
 
 	tour_ = new_tour;
-	if(passTour_) {
+	if (passTour_) {
 		passTour_ = false;
 		tourSuivant();
 	}
@@ -132,13 +137,37 @@ bool Game::estJouable(Carte* carte) {
 	bool memeSymbole = talon_.back()->symbole() == carte->symbole();
 	bool memeCouleur = talon_.back()->couleur() == carte->couleur();
 	bool carteJoker = carte->couleur() == NOIR;
-	return (cptPlusDeux_ > 0 ? memeSymbole :  memeCouleur || memeSymbole || carteJoker);
+	return (cptPlusDeux_ > 0 ? memeSymbole : memeCouleur || memeSymbole || carteJoker);
+}
+
+int Game::choixCouleurJoueur() {
+	char choix = ' ';
+	std::cout << " _____________________________________________ " << std::endl;
+	std::cout << "|           Choisissez la couleur :           |" << std::endl;
+	std::cout << "| Jaune : 1 | Rouge : 2 | Bleu : 3 | Vert : 4 |" << std::endl;
+	std::cout << "|_____________________________________________|" << std::endl;
+
+	do {
+		std::cout << "|        Entrez une valeur entre 1 et 4       |" << std::endl;
+		std::cout << "                        ";
+		std::cin >> choix;
+		if (choix < '1' || choix > '4') {
+			std::cout << "|              Entree incorrecte              |" << std::endl;
+			std::cout << "|_____________________________________________|" << std::endl;
+		}
+		else
+			break;
+	} while (true);
+	std::cout << "|_____________________________________________|" << std::endl;
+	int couleur = (choix - '0') * -1;
+
+	return couleur;
 }
 
 Paquet Game::getCarteJouables(int main) {
 	Paquet cartes = Paquet();
 	for (Carte* carte : mains_[main]) {
-		if(estJouable(carte)) {
+		if (estJouable(carte)) {
 			cartes.push_back(carte);
 		}
 	}
@@ -151,6 +180,9 @@ void Game::jouerCarte(Carte* carte) {
 	talon_.push_back(carte);
 }
 
+void Game::setPlusQuatre(bool plusQuatre) {
+	plusQuatre_ = plusQuatre;
+}
 
 Game::~Game() {
 }

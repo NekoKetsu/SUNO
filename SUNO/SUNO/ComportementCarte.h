@@ -6,8 +6,7 @@ protected:
 	Carte* carte_;
 public:
 	ComportementCarte();
-	ComportementCarte(Carte * carte);
+	ComportementCarte(Carte* carte);
 	~ComportementCarte();
 	void jouer();
 };
-

@@ -3,10 +3,9 @@
 
 
 class ComportementPasseTour :
-	public ComportementCarte {
+		public ComportementCarte {
 public:
 	ComportementPasseTour(Carte* carte);
 	~ComportementPasseTour();
 	void jouer();
 };
-

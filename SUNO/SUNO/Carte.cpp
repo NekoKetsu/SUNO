@@ -24,7 +24,7 @@ Carte::Carte(Game* game, ComportementCarte comp, int couleur, int symbole) {
 }
 
 
-Carte::Carte(Game * game, int couleur, int symbole) {
+Carte::Carte(Game* game, int couleur, int symbole) {
 	game_ = game;
 	couleur_ = couleur;
 	symbole_ = symbole;
@@ -34,7 +34,7 @@ Carte::Carte(Game * game, int couleur, int symbole) {
 Carte::~Carte() {
 }
 
- int Carte::symbole() {
+int Carte::symbole() {
 	return symbole_;
 }
 
@@ -54,3 +54,14 @@ std::string Carte::toString() {
 	return std::to_string(symbole_) + " " + std::to_string(couleur_);
 }
 
+void Carte::setCouleur(int couleur) {
+	couleur_ = couleur;
+}
+
+Game* Carte::getGame() const {
+	return game_;
+}
+
+void Carte::setGame(Game* game) {
+	game_ = game;
+}

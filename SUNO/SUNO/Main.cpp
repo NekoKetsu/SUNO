@@ -4,6 +4,7 @@
 
 int main() {
 	Game game = Game();
+	std::cout << game.choixCouleurJoueur() << std::endl;
 	game.commencer();
 	std::cout << game.pioche().size() << std::endl;
 
