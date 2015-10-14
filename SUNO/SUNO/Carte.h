@@ -36,7 +36,7 @@ public:
 	int couleur();
 	void jouer();
 	void setComportement(ComportementCarte comp);
-
+	std::string toString();
 	Game* game() const {
 		return game_;
 	}
@@ -45,5 +45,4 @@ public:
 		game_ = game;
 	}
 
-	std::string afficher();
 };

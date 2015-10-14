@@ -50,7 +50,7 @@ void Carte::setComportement(ComportementCarte comp) {
 	comp_ = comp;
 }
 
-std::string Carte::afficher() {
+std::string Carte::toString() {
 	return std::to_string(symbole_) + " " + std::to_string(couleur_);
 }
 

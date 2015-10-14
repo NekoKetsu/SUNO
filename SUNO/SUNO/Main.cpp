@@ -8,6 +8,6 @@ int main() {
 	std::cout << game.pioche().size() << std::endl;
 
 	for (Carte* carte : game.pioche()) {
-		std::cout << carte->afficher() << std::endl;
+		std::cout << carte->toString() << std::endl;
 	}
 }
