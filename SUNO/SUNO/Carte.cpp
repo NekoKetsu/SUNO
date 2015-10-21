@@ -51,7 +51,7 @@ void Carte::setComportement(ComportementCarte comp) {
 }
 
 std::string Carte::toString() {
-	return std::to_string(symbole_) + " " + std::to_string(couleur_);
+	return std::to_string(symbole_) + "/" + std::to_string(couleur_);
 }
 
 void Carte::setCouleur(int couleur) {

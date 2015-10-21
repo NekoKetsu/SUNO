@@ -80,7 +80,7 @@ void Game::jouerTour() {
 	Paquet cartesJouables = Paquet();
 	Paquet mainCourante = mains_[tour_];
 
-	// Récupère les cartes jouables
+	// Rï¿½cupï¿½re les cartes jouables
 	for (Carte* c : mainCourante) {
 		if (estJouable(c)) {
 			cartesJouables.push_back(c);
@@ -98,13 +98,13 @@ void Game::jouerTour() {
 	}
 	// TODO 
 	//	si nbPioche == 1 checker si la nouvelle carte est jouable
-	//		Demander quelles cartes joué parmi les jouables 
+	//		Demander quelles cartes jouï¿½ parmi les jouables 
 	//		Mettre dans carteAJouer
 	Carte* carteAJouer;
 	jouerCarte(carteAJouer);
 	mainCourante.erase(std::find(mainCourante.begin(), mainCourante.end(), carteAJouer));
 	if (mainCourante.empty()) {
-		// SITUATION DE VICTOIRE du joueur n°tour_
+		// SITUATION DE VICTOIRE du joueur nï¿½tour_
 	}
 	else {
 		tourSuivant();
@@ -182,6 +182,29 @@ void Game::jouerCarte(Carte* carte) {
 
 void Game::setPlusQuatre(bool plusQuatre) {
 	plusQuatre_ = plusQuatre;
+}
+
+void Game::afficheMain(int main) {
+	std::cout << " ______________________________________________ " << std::endl;
+	std::cout << "|           Composition de la main :           |" << std::endl;
+	for (Carte* carte : mains_[main]) {
+		std::cout << carte->toString() << " |";
+	}
+}
+
+void Game::afficheTalon() {
+	std::cout << " ______________________________________________ " << std::endl;
+	std::cout << "|           Carte visible du talon :           |" << std::endl;
+	std::cout << "             "<<talon_.back()->toString() <<std::endl;
+}
+
+void Game::choixCarteJoueur() {
+	std::cout << " _________________________________________________________________ " << std::endl;
+	std::cout << "|           Choisissez la carte que vous voulez jouer :           |" << std::endl;
+	for (Carte* carte : getCarteJouables(1)) {
+		std::cout << carte->toString();
+	}
+	std::cout << " "<<std::endl;
 }
 
 Game::~Game() {

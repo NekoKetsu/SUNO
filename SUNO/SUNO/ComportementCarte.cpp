@@ -2,7 +2,7 @@
 
 
 ComportementCarte::ComportementCarte() {
-	//carte_ = nullptr;
+	carte_ = nullptr;
 }
 
 ComportementCarte::ComportementCarte(Carte* carte) : carte_(carte) {

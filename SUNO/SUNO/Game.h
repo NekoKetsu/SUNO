@@ -30,6 +30,9 @@ public:
 	void passeTour();
 	bool estJouable(Carte* carte);
 	int choixCouleurJoueur();
+	void choixCarteJoueur();
+	void afficheMain(int main);
+	void afficheTalon();
 	Paquet getCarteJouables(int main);
 	void jouerCarte(Carte* carte);
 	void setPlusQuatre(bool plusQuatre);
