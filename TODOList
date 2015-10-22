@@ -1,1 +1,14 @@
 # SUNO
+GameController :
+Mettre les méthodes de modification de la game dedans (sauf accesseurs)
+
+GameView :
+Mettre les méthode d'affichages
+soit Game soit GameController
+onCardPlayed()
+onColorChoose()
+onCardChoose()
+
+Game :
+Doit contenir uniquement les données 
+A une liste de GameView
