@@ -8,6 +8,9 @@ int main() {
 	game.commencer();
 	game.afficheTalon();
 	game.afficheMain(1);
+	game.choixCarteJoueur(1);
+	game.afficheTalon();
+	game.afficheMain(1);
 //	std::cout << game.pioche().size() << std::endl;
 //
 //	for (Carte* carte : game.pioche()) {

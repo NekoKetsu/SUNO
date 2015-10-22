@@ -101,8 +101,8 @@ void Game::jouerTour() {
 	//		Demander quelles cartes jou� parmi les jouables 
 	//		Mettre dans carteAJouer
 	Carte* carteAJouer;
-	jouerCarte(carteAJouer);
-	mainCourante.erase(std::find(mainCourante.begin(), mainCourante.end(), carteAJouer));
+	jouerCarte(carteAJouer,tour_);
+	//mainCourante.erase(std::find(mainCourante.begin(), mainCourante.end(), carteAJouer));
 	if (mainCourante.empty()) {
 		// SITUATION DE VICTOIRE du joueur n�tour_
 	}
@@ -175,9 +175,10 @@ Paquet Game::getCarteJouables(int main) {
 	return cartes;
 }
 
-void Game::jouerCarte(Carte* carte) {
+void Game::jouerCarte(Carte* carte,int main) {
 	carte->jouer();
 	talon_.push_back(carte);
+	mains_[main].erase(std::find(mains_[main].begin(),mains_[main].end(),carte));
 }
 
 void Game::setPlusQuatre(bool plusQuatre) {
@@ -190,6 +191,7 @@ void Game::afficheMain(int main) {
 	for (Carte* carte : mains_[main]) {
 		std::cout << carte->toString() << " |";
 	}
+	std::cout << " " << std::endl;
 }
 
 void Game::afficheTalon() {
@@ -198,13 +200,28 @@ void Game::afficheTalon() {
 	std::cout << "             "<<talon_.back()->toString() <<std::endl;
 }
 
-void Game::choixCarteJoueur() {
+void Game::choixCarteJoueur(int main) {
+	Paquet cartesJouables;
+	unsigned choix;
 	std::cout << " _________________________________________________________________ " << std::endl;
 	std::cout << "|           Choisissez la carte que vous voulez jouer :           |" << std::endl;
-	for (Carte* carte : getCarteJouables(1)) {
-		std::cout << carte->toString();
+	for (Carte* carte : getCarteJouables(main)) {
+		std::cout << carte->toString() << " |";
+		cartesJouables.push_back(carte);
 	}
-	std::cout << " "<<std::endl;
+	if(cartesJouables.size() != 0){
+		do{
+			std::cout << " Saisissez la position de la carte dans la liste (de 1 à "<< cartesJouables.size() <<")"<<std::endl;
+			std::cin >> choix;
+			if(choix < 1 || choix > cartesJouables.size()){
+				std::cout << "|              Entree incorrecte              |" << std::endl;
+				std::cout << "|_____________________________________________|" << std::endl;
+			}else{
+				jouerCarte(cartesJouables.at(choix-1),main);
+				break;
+			}
+		}while(true);
+	}
 }
 
 Game::~Game() {
