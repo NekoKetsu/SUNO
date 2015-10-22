@@ -1,11 +1,8 @@
 #include "ComportementCarte.h"
 
 
-ComportementCarte::ComportementCarte() {
-	carte_ = nullptr;
-}
-
 ComportementCarte::ComportementCarte(Carte* carte) : carte_(carte) {
+	nom = "Simple";
 }
 
 ComportementCarte::~ComportementCarte() {

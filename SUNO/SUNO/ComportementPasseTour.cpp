@@ -3,6 +3,7 @@
 #include "Game.h"
 
 ComportementPasseTour::ComportementPasseTour(Carte* carte) : ComportementCarte(carte) {
+	nom = "PasseTour";
 }
 
 ComportementPasseTour::~ComportementPasseTour() {

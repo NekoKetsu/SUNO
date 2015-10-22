@@ -2,10 +2,8 @@
 #include "Carte.h"
 #include "Game.h"
 
-ComportementChangeSens::ComportementChangeSens() {
-}
-
 ComportementChangeSens::ComportementChangeSens(Carte* carte) : ComportementCarte(carte) {
+	nom = "ChnageSens";
 }
 
 void ComportementChangeSens::jouer() {

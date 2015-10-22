@@ -4,16 +4,15 @@
 
 int main() {
 	Game game = Game();
-	//std::cout << game.choixCouleurJoueur() << std::endl;
+	//std::cout << game.choixCouleur() << std::endl;
 	game.commencer();
-	game.afficheTalon();
-	game.afficheMain(1);
-	game.choixCarteJoueur(1);
-	game.afficheTalon();
-	game.afficheMain(1);
-//	std::cout << game.pioche().size() << std::endl;
-//
-//	for (Carte* carte : game.pioche()) {
-//		std::cout << carte->toString() << std::endl;
-//	}
+	game.jouerTour();
+	game.jouerTour();
+	game.jouerTour();
+	game.jouerTour();
+	//	std::cout << game.pioche().size() << std::endl;
+	//
+	//	for (Carte* carte : game.pioche()) {
+	//		std::cout << carte->toString() << std::endl;
+	//	}
 }

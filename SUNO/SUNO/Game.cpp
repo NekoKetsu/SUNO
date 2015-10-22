@@ -39,19 +39,27 @@ void Game::commencer() {
 	pioche_.pop_back();
 
 	for (int j = 0; j < 4; ++j) {
-		Paquet main = piocher(7);
-		mains_[j] = main;
+		mains_[j] = Paquet();
+		tour_ = j;
+		piocher(7);
 	}
+	tour_ = TOUR_MIN;
 }
 
 void Game::melangerPioche() {
 	srand(time(nullptr));
-
 	std::random_shuffle(pioche_.begin(), pioche_.end());
 }
 
+Paquet Game::getMainCourante() {
+	return mains_[tour_];
+}
 
-Paquet Game::piocher(unsigned int nb = 1) {
+void Game::setMainCourante(Paquet p) {
+	mains_[tour_] = p;
+}
+
+void Game::piocher(unsigned int nb = 1) {
 	Paquet cartes = Paquet();
 
 	while (cartes.size() < nb) {
@@ -62,8 +70,9 @@ Paquet Game::piocher(unsigned int nb = 1) {
 		cartes.push_back(pioche_.back());
 		pioche_.pop_back();
 	}
-
-	return cartes;
+	Paquet main = getMainCourante();
+	main.insert(main.end(), cartes.begin(), cartes.end());
+	setMainCourante(main);
 }
 
 void Game::refairePioche() {
@@ -77,33 +86,24 @@ void Game::refairePioche() {
 
 void Game::jouerTour() {
 	int nbPioche = (cptPlusDeux_ > 0 ? cptPlusDeux_ * 2 : (plusQuatre_ ? 4 : 1));
-	Paquet cartesJouables = Paquet();
-	Paquet mainCourante = mains_[tour_];
-
-	// R�cup�re les cartes jouables
-	for (Carte* c : mainCourante) {
-		if (estJouable(c)) {
-			cartesJouables.push_back(c);
-		}
-
-	}
-
 
 	// Si aucune carte jouable
-	if (cartesJouables.empty()) {
+	if (getCarteJouables().empty()) {
 		// Pioches les cartes
-		Paquet pioches = piocher(nbPioche);
-		// Met dans la main
-		mainCourante.insert(mainCourante.end(), pioches.begin(), pioches.end());
+		piocher(nbPioche);
+		cptPlusDeux_ = 0;
+		plusQuatre_ = false;
+
+		if (nbPioche == 1 && !getCarteJouables().empty()) {
+			choixCarte();
+		}
+	}else {
+		choixCarte();
 	}
-	// TODO 
-	//	si nbPioche == 1 checker si la nouvelle carte est jouable
-	//		Demander quelles cartes jou� parmi les jouables 
-	//		Mettre dans carteAJouer
-	Carte* carteAJouer;
-	jouerCarte(carteAJouer,tour_);
-	//mainCourante.erase(std::find(mainCourante.begin(), mainCourante.end(), carteAJouer));
-	if (mainCourante.empty()) {
+
+
+
+	if (getMainCourante().empty()) {
 		// SITUATION DE VICTOIRE du joueur n�tour_
 	}
 	else {
@@ -137,10 +137,11 @@ bool Game::estJouable(Carte* carte) {
 	bool memeSymbole = talon_.back()->symbole() == carte->symbole();
 	bool memeCouleur = talon_.back()->couleur() == carte->couleur();
 	bool carteJoker = carte->couleur() == NOIR;
-	return (cptPlusDeux_ > 0 ? memeSymbole : memeCouleur || memeSymbole || carteJoker);
+	bool plusQuatre = plusQuatre_;
+	return (plusQuatre ? false : ( (cptPlusDeux_ > 0 ? memeSymbole : memeCouleur || memeSymbole || carteJoker)));
 }
 
-int Game::choixCouleurJoueur() {
+int Game::choixCouleur() {
 	char choix = ' ';
 	std::cout << " _____________________________________________ " << std::endl;
 	std::cout << "|           Choisissez la couleur :           |" << std::endl;
@@ -157,16 +158,17 @@ int Game::choixCouleurJoueur() {
 		}
 		else
 			break;
-	} while (true);
+	}
+	while (true);
 	std::cout << "|_____________________________________________|" << std::endl;
 	int couleur = (choix - '0') * -1;
 
 	return couleur;
 }
 
-Paquet Game::getCarteJouables(int main) {
+Paquet Game::getCarteJouables() {
 	Paquet cartes = Paquet();
-	for (Carte* carte : mains_[main]) {
+	for (Carte* carte : getMainCourante()) {
 		if (estJouable(carte)) {
 			cartes.push_back(carte);
 		}
@@ -175,20 +177,22 @@ Paquet Game::getCarteJouables(int main) {
 	return cartes;
 }
 
-void Game::jouerCarte(Carte* carte,int main) {
+void Game::jouerCarte(Carte* carte) {
 	carte->jouer();
 	talon_.push_back(carte);
-	mains_[main].erase(std::find(mains_[main].begin(),mains_[main].end(),carte));
+	Paquet main = getMainCourante();
+	main.erase(std::find(main.begin(), main.end(), carte));
+	setMainCourante(main);
 }
 
 void Game::setPlusQuatre(bool plusQuatre) {
 	plusQuatre_ = plusQuatre;
 }
 
-void Game::afficheMain(int main) {
+void Game::afficheMain() {
 	std::cout << " ______________________________________________ " << std::endl;
 	std::cout << "|           Composition de la main :           |" << std::endl;
-	for (Carte* carte : mains_[main]) {
+	for (Carte* carte : getMainCourante()) {
 		std::cout << carte->toString() << " |";
 	}
 	std::cout << " " << std::endl;
@@ -197,30 +201,33 @@ void Game::afficheMain(int main) {
 void Game::afficheTalon() {
 	std::cout << " ______________________________________________ " << std::endl;
 	std::cout << "|           Carte visible du talon :           |" << std::endl;
-	std::cout << "             "<<talon_.back()->toString() <<std::endl;
+	std::cout << "             " << talon_.back()->toString() << std::endl;
 }
 
-void Game::choixCarteJoueur(int main) {
-	Paquet cartesJouables;
+void Game::choixCarte() {
+	Paquet cartesJouables = Paquet();
 	unsigned choix;
+	std::cout << " __________tour du joueur "<< tour_ << "______________________________________ " << std::endl;
 	std::cout << " _________________________________________________________________ " << std::endl;
 	std::cout << "|           Choisissez la carte que vous voulez jouer :           |" << std::endl;
-	for (Carte* carte : getCarteJouables(main)) {
+	for (Carte* carte : getCarteJouables()) {
 		std::cout << carte->toString() << " |";
 		cartesJouables.push_back(carte);
 	}
-	if(cartesJouables.size() != 0){
-		do{
-			std::cout << " Saisissez la position de la carte dans la liste (de 1 à "<< cartesJouables.size() <<")"<<std::endl;
+	if (cartesJouables.size() != 0) {
+		do {
+			std::cout << " Saisissez la position de la carte dans la liste (de 1 à " << cartesJouables.size() << ")" << std::endl;
 			std::cin >> choix;
-			if(choix < 1 || choix > cartesJouables.size()){
+			if (choix < 1 || choix > cartesJouables.size()) {
 				std::cout << "|              Entree incorrecte              |" << std::endl;
 				std::cout << "|_____________________________________________|" << std::endl;
-			}else{
-				jouerCarte(cartesJouables.at(choix-1),main);
+			}
+			else {
+				jouerCarte(cartesJouables.at(choix - 1));
 				break;
 			}
-		}while(true);
+		}
+		while (true);
 	}
 }
 

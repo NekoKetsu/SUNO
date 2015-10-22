@@ -16,7 +16,7 @@ Carte::Carte(int couleur, int symbole) {
 }
 
 
-Carte::Carte(Game* game, ComportementCarte comp, int couleur, int symbole) {
+Carte::Carte(Game* game, ComportementCarte* comp, int couleur, int symbole) {
 	game_ = game;
 	couleur_ = couleur;
 	symbole_ = symbole;
@@ -43,10 +43,10 @@ int Carte::couleur() {
 }
 
 void Carte::jouer() {
-	comp_.jouer();
+	comp_->jouer();
 }
 
-void Carte::setComportement(ComportementCarte comp) {
+void Carte::setComportement(ComportementCarte * comp) {
 	comp_ = comp;
 }
 

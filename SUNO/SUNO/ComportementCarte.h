@@ -1,12 +1,13 @@
 #pragma once
+#include <string>
 class Carte;
 
 class ComportementCarte {
 protected:
 	Carte* carte_;
+	std::string nom;
 public:
-	ComportementCarte();
 	ComportementCarte(Carte* carte);
-	~ComportementCarte();
-	void jouer();
+	virtual ~ComportementCarte() = 0;
+	virtual void jouer() = 0;
 };

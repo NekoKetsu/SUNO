@@ -2,10 +2,8 @@
 #include "Carte.h"
 #include "Game.h"
 
-ComportementPlusDeux::ComportementPlusDeux() {
-}
-
 ComportementPlusDeux::ComportementPlusDeux(Carte* carte) : ComportementCarte(carte) {
+	nom = "PlusDeux";
 }
 
 void ComportementPlusDeux::jouer() {

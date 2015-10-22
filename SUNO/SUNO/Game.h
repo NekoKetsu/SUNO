@@ -22,20 +22,22 @@ public:
 	Game();
 	void commencer();
 	void melangerPioche();
-	Paquet piocher(unsigned int nb);
+	Paquet getMainCourante();
+	void setMainCourante(Paquet p);
+	void piocher(unsigned int nb);
 	void refairePioche();
 	void jouerTour();
 	void tourSuivant();
 	void changerSens();
 	void passeTour();
 	bool estJouable(Carte* carte);
-	int choixCouleurJoueur();
-	void choixCarteJoueur(int main);
-	void afficheMain(int main);
+	int choixCouleur();
+	Paquet getCarteJouables();
 	void afficheTalon();
-	Paquet getCarteJouables(int main);
-	void jouerCarte(Carte* carte,int main);
+	void choixCarte();
+	void jouerCarte(Carte* carte);
 	void setPlusQuatre(bool plusQuatre);
+	void afficheMain();
 	~Game();
 
 	Paquet pioche() {

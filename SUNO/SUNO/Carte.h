@@ -24,18 +24,18 @@ private:
 	int couleur_;
 	int symbole_;
 	Game* game_;
-	ComportementCarte comp_;
+	ComportementCarte* comp_;
 
 public:
 	Carte();
 	Carte(int couleur, int symbole);
 	Carte(Game* game, int couleur, int symbole);
-	Carte(Game* game, ComportementCarte comp, int couleur, int symbole);
+	Carte(Game* game, ComportementCarte* comp, int couleur, int symbole);
 	~Carte();
 	int symbole();
 	int couleur();
 	void jouer();
-	void setComportement(ComportementCarte comp);
+	void setComportement(ComportementCarte* comp);
 	void setCouleur(int couleur);
 	Game* getGame() const;
 	void setGame(Game* game);
