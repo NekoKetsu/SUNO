@@ -11,7 +11,6 @@
 Carte* CarteFactory::createCarte(Game* game, int couleur, int symbole) {
 	Carte* carte = new Carte(game, couleur, symbole);
 	ComportementCarte* comp;
-	std::cout << "TEST " << symbole << std::endl;
 	switch (symbole) {
 		case SENS:
 			comp = new ComportementChangeSens(carte);

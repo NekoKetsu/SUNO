@@ -10,6 +10,13 @@ int main() {
 	game.jouerTour();
 	game.jouerTour();
 	game.jouerTour();
+	game.jouerTour();
+	game.jouerTour();
+	game.jouerTour();
+	game.jouerTour();
+	game.jouerTour();
+	game.jouerTour();
+	game.jouerTour();
 	//	std::cout << game.pioche().size() << std::endl;
 	//
 	//	for (Carte* carte : game.pioche()) {

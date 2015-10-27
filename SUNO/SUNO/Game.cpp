@@ -52,11 +52,11 @@ void Game::melangerPioche() {
 }
 
 Paquet Game::getMainCourante() {
-	return mains_[tour_];
+	return mains_[tour_-1];
 }
 
 void Game::setMainCourante(Paquet p) {
-	mains_[tour_] = p;
+	mains_[tour_-1] = p;
 }
 
 void Game::piocher(unsigned int nb = 1) {
@@ -86,7 +86,8 @@ void Game::refairePioche() {
 
 void Game::jouerTour() {
 	int nbPioche = (cptPlusDeux_ > 0 ? cptPlusDeux_ * 2 : (plusQuatre_ ? 4 : 1));
-
+	afficheMain();
+	afficheTalon();
 	// Si aucune carte jouable
 	if (getCarteJouables().empty()) {
 		// Pioches les cartes
