@@ -40,10 +40,11 @@ void Game::commencer() {
 
 	for (int j = 0; j < 4; ++j) {
 		mains_[j] = Paquet();
-		tour_ = j;
-		piocher(7);
+		tour_ = j+1;
+		piocher(2);
 	}
 	tour_ = TOUR_MIN;
+	finPartie = false;
 }
 
 void Game::melangerPioche() {
@@ -85,11 +86,13 @@ void Game::refairePioche() {
 }
 
 void Game::jouerTour() {
+	std::cout << " __________tour du joueur "<< tour_ << "______________________________________ " << std::endl;
 	int nbPioche = (cptPlusDeux_ > 0 ? cptPlusDeux_ * 2 : (plusQuatre_ ? 4 : 1));
 	afficheMain();
 	afficheTalon();
 	// Si aucune carte jouable
 	if (getCarteJouables().empty()) {
+		std::cout << " Le joueur "<< tour_ << " pioche une carte"<< std::endl;
 		// Pioches les cartes
 		piocher(nbPioche);
 		cptPlusDeux_ = 0;
@@ -105,7 +108,8 @@ void Game::jouerTour() {
 
 
 	if (getMainCourante().empty()) {
-		// SITUATION DE VICTOIRE du joueur n�tour_
+		finPartie = true;
+		std::cout << "Le joueur " <<tour_<< " a gagné"<< std::endl;
 	}
 	else {
 		tourSuivant();
@@ -193,6 +197,7 @@ void Game::setPlusQuatre(bool plusQuatre) {
 void Game::afficheMain() {
 	std::cout << " ______________________________________________ " << std::endl;
 	std::cout << "|           Composition de la main :           |" << std::endl;
+	std::cout << "Carte dans la main :" << getMainCourante().size() <<std::endl;
 	for (Carte* carte : getMainCourante()) {
 		std::cout << carte->toString() << " |";
 	}
@@ -203,12 +208,12 @@ void Game::afficheTalon() {
 	std::cout << " ______________________________________________ " << std::endl;
 	std::cout << "|           Carte visible du talon :           |" << std::endl;
 	std::cout << "             " << talon_.back()->toString() << std::endl;
+	std::cout << "|______________________________________________|" << std::endl;
 }
 
 void Game::choixCarte() {
 	Paquet cartesJouables = Paquet();
 	unsigned choix;
-	std::cout << " __________tour du joueur "<< tour_ << "______________________________________ " << std::endl;
 	std::cout << " _________________________________________________________________ " << std::endl;
 	std::cout << "|           Choisissez la carte que vous voulez jouer :           |" << std::endl;
 	for (Carte* carte : getCarteJouables()) {

@@ -17,6 +17,7 @@ private:
 	Paquet talon_;
 	Paquet pioche_;
 	Paquet mains_[4];
+	bool finPartie;
 
 public:
 	Game();
@@ -56,4 +57,11 @@ public:
 		++cptPlusDeux_;
 	}
 
+	bool isFinPartie() const {
+		return finPartie;
+	}
+
+	void setFinPartie(bool finPartie) {
+		this->finPartie = finPartie;
+	}
 };

@@ -6,17 +6,10 @@ int main() {
 	Game game = Game();
 	//std::cout << game.choixCouleur() << std::endl;
 	game.commencer();
-	game.jouerTour();
-	game.jouerTour();
-	game.jouerTour();
-	game.jouerTour();
-	game.jouerTour();
-	game.jouerTour();
-	game.jouerTour();
-	game.jouerTour();
-	game.jouerTour();
-	game.jouerTour();
-	game.jouerTour();
+
+	while(!game.isFinPartie()){
+		game.jouerTour();
+	}
 	//	std::cout << game.pioche().size() << std::endl;
 	//
 	//	for (Carte* carte : game.pioche()) {
